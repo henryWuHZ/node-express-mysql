@@ -1,4 +1,4 @@
-const ReadFile = require('../uitils/ReadFile.js')
+const ReadFile = require('../utils/ReadFile.js')
 module.exports = {
   '/static': function (req, res, filePath) {
     ReadFile(req, res, filePath);

@@ -1,0 +1,28 @@
+{
+  "name": "nodebackserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "koaServer.js",
+  "dependencies": {
+    "concat-files": "^0.1.1",
+    "express": "^4.17.1",
+    "fs-extra": "^8.1.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.1",
+    "koa-multer": "^1.0.2",
+    "koa-route": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa2-cors": "^2.0.6",
+    "mime": "^2.4.4",
+    "node-dev": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "node-dev expressServer.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
