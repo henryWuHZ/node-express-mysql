@@ -2,7 +2,8 @@ let formiadble = require('formidable') // 文件上传
 let fs = require('fs-extra')
 let path = require('path')
 let concat = require('concat-files')
-let uploadDir = path.join(__dirname, 'uploads')
+const config = require('../config/config.js');
+let uploadDir = path.join(config.root, 'uploads')
 
 // 文件夹是否存在, 不存在则创建文件
 function folderIsExit(folder) {
@@ -59,14 +60,14 @@ async function mergeFiles(srcDir, targetDir, newFileName) {
 }
 
 module.exports = async function (req, res, next) {
-  let tmpPath = path.join(__dirname, 'tmp')
+  let tmpPath = path.join(config.root, 'tmp')
   let form = new formiadble.IncomingForm({ uploadDir: tmpPath })
   form.parse(req, function (err, fileds, file) {
     let index = parseInt(fileds.chunkNumber)
     let total = parseInt(fileds.totalChunks)
     let uuid = fileds.identifier
     let fileName = fileds.filename
-    let folder = path.resolve(__dirname, 'uploads', uuid)
+    let folder = path.resolve(config.root, 'uploads', uuid)
     console.log('tmp:', tmpPath, ' folder:', folder)
     folderIsExit(folder).then(function () {
       let destFile = path.resolve(folder, index + '')
