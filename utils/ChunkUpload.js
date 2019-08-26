@@ -9,9 +9,10 @@ let uploadDir = path.join(config.root, 'uploads')
 function folderIsExit(folder) {
   console.log('folderIsExit', folder)
   return new Promise(async (resolve, reject) => {
-    let result = await fs.ensureDirSync(path.join(folder))
-    console.log('result----', result)
-    resolve(true)
+    await fs.ensureDir(path.join(folder), function (err) {
+      if (!err) resolve(true)
+      else reject(err)
+    })
   })
 }
 // 把文件从一个目录拷贝到别一个目录
@@ -47,7 +48,6 @@ function listDir(path) {
 
 // 合并文件
 async function mergeFiles(srcDir, targetDir, newFileName) {
-  let targetStream = fs.createWriteStream(path.join(targetDir, newFileName))
   let fileArr = await listDir(srcDir)
   fileArr = fileArr.sort((a, b) => { return a - b })
   // 把文件名加上文件夹的前缀
@@ -56,6 +56,13 @@ async function mergeFiles(srcDir, targetDir, newFileName) {
   }
   concat(fileArr, path.join(targetDir, newFileName), () => {
     console.log('Merge Success!')
+
+    fs.remove(srcDir).then(() => {
+      console.log('remove tmp file')
+    })
+      .catch(err => {
+        console.error(err)
+      })
   })
 }
 
@@ -74,9 +81,9 @@ module.exports = async function (req, res, next) {
       copyFile(file.file.path, destFile).then(
         successLog => {
           if (index === total) {
-            mergeFiles(path.join(uploadDir, uuid), uploadDir, fileName)
             res.status(200)
             res.send({ ...fileds, code: '00000', uploaded: true })
+            mergeFiles(path.join(uploadDir, uuid), uploadDir, fileName)
           } else {
             res.status(200)
             res.send({ ...fileds })
