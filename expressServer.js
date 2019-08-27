@@ -2,9 +2,9 @@ let express = require('express')
 let path = require('path')
 let bodyParser = require('body-parser');
 let app = express()
-let chunkUpload = require('./utils/ChunkUpload.js')
-let Dbconnection = require('./utils/dbConnect');
-let connectDb = new Dbconnection();
+let fileRouter = require('./route/file.js')
+let userRouter = require('./route/user.js')
+let brandRouter = require('./route/brand.js')
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -30,32 +30,9 @@ app.all('*', (req, res, next) => {
   else next()
 })
 
-app.get('/test', function (req, res) {
-  res.send({
-    "aa": 123
-  })
-})
-
-app.get('/file/upload', function (req, res, next) {
-  console.log('check info:', req.query)
-  res.status(200)
-  res.send({ ...req.query })
-})
-
-app.post('/file/upload', function (req, res, next) {
-  chunkUpload(req, res, next)
-})
-
-app.post('/signIn', function (req, res, next) {
-  console.log(req.body)
-  // connectDb.createConnect();
-  let body = connectDb.getLogin(req.body.name, req.body.pws);
-  console.log(body)
-  if (body) {
-    res.json(...body)
-  }
-  // connectDb.stopConnect();
-})
+app.use('/file', fileRouter)
+app.use('/user', userRouter)
+app.use('/brand', brandRouter)
 
 app.listen(9000, () => {
   console.log('服务启动完成，端口监听9000！')
