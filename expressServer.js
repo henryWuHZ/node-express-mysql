@@ -30,9 +30,9 @@ app.all('*', (req, res, next) => {
   else next()
 })
 
-app.use('/file', fileRouter)
-app.use('/user', userRouter)
-app.use('/brand', brandRouter)
+app.use('/api/file', fileRouter)
+app.use('/api/user', userRouter)
+app.use('/api/brand', brandRouter)
 
 app.listen(9000, () => {
   console.log('服务启动完成，端口监听9000！')

@@ -2,9 +2,9 @@ let mysql = require('mysql');
 
 function DbConnect() {
   this.pool = mysql.createPool({
-    host: 'localhost',
+    host: '124.156.132.151',
     user: 'root',
-    password: '123456',
+    password: 'Wh876426%',
     port: '3306',
     database: 'car_auto'
   });
