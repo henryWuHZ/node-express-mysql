@@ -1,30 +1,25 @@
 const express = require('express')
 const router = express.Router()
-let brandController = require('../controller/brand.js')
+let modelController = require('../controller/modelList.js')
 
 router.post('/add', function (req, res, next) {
   console.log(req.body)
-  brandController.addBrand(req, res, next)
+  modelController.addModel(req, res, next)
 })
 
 router.post('/edit', function (req, res, next) {
   console.log(req.body)
-  brandController.updateBrand(req, res, next)
+  modelController.updateModel(req, res, next)
 })
 
 router.post('/delete', function (req, res, next) {
   console.log(req.body)
-  brandController.deleteBrand(req, res, next)
+  modelController.deleteModel(req, res, next)
 })
 
 router.get('/list', function (req, res, next) {
   console.log(req.body)
-  brandController.getBrands(req, res, next)
-})
-
-router.get('/opts', function (req, res, next) {
-  console.log(req.body)
-  brandController.getOpts(req, res, next)
+  modelController.getModels(req, res, next)
 })
 
 module.exports = router

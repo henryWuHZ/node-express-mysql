@@ -5,6 +5,7 @@ let app = express()
 let fileRouter = require('./route/file.js')
 let userRouter = require('./route/user.js')
 let brandRouter = require('./route/brand.js')
+let modelRouter = require('./route/model.js')
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -33,6 +34,7 @@ app.all('*', (req, res, next) => {
 app.use('/api/file', fileRouter)
 app.use('/api/user', userRouter)
 app.use('/api/brand', brandRouter)
+app.use('/api/model', modelRouter)
 
 app.listen(9000, () => {
   console.log('服务启动完成，端口监听9000！')
