@@ -18,6 +18,7 @@ app.use(function (req, res, next) {
 })
 // 处理静态资源
 app.use('/static', express.static(path.join(__dirname, 'static')))
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // 处理跨域
 app.all('*', (req, res, next) => {
