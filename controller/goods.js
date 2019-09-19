@@ -2,6 +2,36 @@ let Dbconnection = require('../utils/dbConnect');
 let connectDb = new Dbconnection();
 
 module.exports = {
+  getTypeList: function (req, res, next) {
+    let sql = 'SELECT * from brand, model WHERE brand.brand_id = model.brand_id'
+    connectDb.query(sql, [req.body.name, req.body.brand_id]).then(function (result) {
+      let temp = {}
+      let arr = []
+      result.map(item => {
+        if (!temp.hasOwnProperty(item.brand_name)) {
+          temp[item.brand_name] = {
+            label: item.brand_name,
+            value: item.brand_id,
+            children: [{
+              label: item.model_name,
+              value: item.model_id
+            }]
+          }
+        } else {
+          temp[item.brand_name].children.push({
+            label: item.model_name,
+            value: item.model_id
+          })
+        }
+      })
+      Object.keys(temp).forEach(item => {
+        arr.push(temp[item])
+      })
+      res.json({ code: '00000', data: arr })
+    }).catch(err => {
+      res.json({ code: 500, message: '操作失败' })
+    })
+  },
   addModel: function (req, res, next) {
     let sql = 'INSERT INTO model (model_name, brand_id) VALUES (?, ?)'
     if (req.body.name === '' || !req.body.name) {

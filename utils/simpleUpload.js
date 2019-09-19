@@ -31,7 +31,7 @@ module.exports = async function (req, res, next) {
     console.log('simple-upload:', fileds, files)
     copyFile(files.file.path, path.resolve(uploadDir, fileds.uniqueIdentifier + '_' + files.file.name)).then(function () {
       saveDB(files.file.name, fileds.uniqueIdentifier).then(function () {
-        res.send({ code: '00000', data: { url: '/uploads/' + files.file.name, name: files.file.name, code: fileds.uniqueIdentifier } })
+        res.send({ code: '00000', data: { url: '/uploads/' + fileds.uniqueIdentifier + '_' + files.file.name, name: files.file.name, code: fileds.uniqueIdentifier } })
       }).catch(err => {
         console.log(err)
         res.json({ code: 500, message: '操作失败' })

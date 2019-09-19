@@ -6,6 +6,7 @@ let fileRouter = require('./route/file.js')
 let userRouter = require('./route/user.js')
 let brandRouter = require('./route/brand.js')
 let modelRouter = require('./route/model.js')
+let goodsRouter = require('./route/goods.js')
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -36,6 +37,7 @@ app.use('/api/file', fileRouter)
 app.use('/api/user', userRouter)
 app.use('/api/brand', brandRouter)
 app.use('/api/model', modelRouter)
+app.use('/api/goods', goodsRouter)
 
 app.listen(9000, () => {
   console.log('服务启动完成，端口监听9000！')
