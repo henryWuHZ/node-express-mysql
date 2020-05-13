@@ -7,9 +7,13 @@ let userRouter = require('./route/user.js')
 let brandRouter = require('./route/brand.js')
 let modelRouter = require('./route/model.js')
 let goodsRouter = require('./route/goods.js')
+const log4js = require('log4js');
+var logger = require('./utils/log4js');
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+app.use(log4js.connectLogger(logger, { level: 'auto', format: (req, res, format) => format(`:method :url  :status  :response-time ms ${JSON.stringify(req.params)} `) }));
 
 app.use(function (req, res, next) {
   // console.log(req.url, req.headers)
